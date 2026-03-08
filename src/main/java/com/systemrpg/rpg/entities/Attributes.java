@@ -2,10 +2,13 @@ package com.systemrpg.rpg.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Embeddable;
+
 /*
  * Base attributes container for game entities
  * Implements Serializable for data persistence or network transmission.
  */
+@Embeddable
 public class Attributes implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

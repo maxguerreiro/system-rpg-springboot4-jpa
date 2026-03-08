@@ -3,16 +3,27 @@ package com.systemrpg.rpg.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 
 /**
  * Represents the blueprint for character classes in the system.
  * Defines the initial growth and available resources for a specific role.
  */
+@Entity
 public class CharacterClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	@Embedded
 	private Attributes attributes;
 	
 	public CharacterClass() {
