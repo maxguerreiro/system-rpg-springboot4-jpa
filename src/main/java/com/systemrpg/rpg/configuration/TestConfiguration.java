@@ -12,6 +12,7 @@ import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
 import com.systemrpg.rpg.repositories.RpgCharacterRepository;
 import com.systemrpg.rpg.entities.RpgCharacter;
+import com.systemrpg.rpg.enums.ClassType;
 
 /**
  * Test configuration class used to seed the database 
@@ -30,21 +31,36 @@ public class TestConfiguration implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Attributes warriorAtributes = new Attributes();
-		warriorAtributes.setHp(5);
-		warriorAtributes.setStrength(10);
+		CharacterClass warrior = new CharacterClass();
+		warrior.setName(ClassType.WARRIOR);
+
+		Attributes warriorAttr = new Attributes();
+		warriorAttr.setHp(5);
+		warriorAttr.setStrength(8);
+		warriorAttr.setDexterity(2);
+		warriorAttr.setIntelligence(1);
+		warriorAttr.setResistance(6);
+		warriorAttr.setMana(0);
+
+		warrior.setAttributes(warriorAttr);
 		
-		Attributes sorcererAtributes = new Attributes();
-		sorcererAtributes.setHp(8);
-		sorcererAtributes.setMana(7);
+		CharacterClass mage = new CharacterClass();
+		mage.setName(ClassType.MAGE);
+
+		Attributes mageAttr = new Attributes();
+		mageAttr.setHp(2);
+		mageAttr.setStrength(1);
+		mageAttr.setDexterity(3);
+		mageAttr.setIntelligence(9);
+		mageAttr.setResistance(2);
+		mageAttr.setMana(10);
+
+		mage.setAttributes(mageAttr);
 		
-		CharacterClass warrior = new CharacterClass(null, "Warrior", warriorAtributes);
-		CharacterClass sorcerer = new CharacterClass(null, "Sorcerer", sorcererAtributes);
+		classRepo.saveAll(Arrays.asList(warrior, mage));
 		
-		classRepo.saveAll(Arrays.asList(warrior, sorcerer));
-		
-		RpgCharacter c1 = new RpgCharacter(null, "Gerald", 60, sorcerer);
-		RpgCharacter c2 = new RpgCharacter(null, "Letho", 100, warrior);
+		RpgCharacter c1 = new RpgCharacter(null, "Personagem1", 60, mage);
+		RpgCharacter c2 = new RpgCharacter(null, "Personagem2", 100, warrior);
 		
 		characterRepo.saveAll(Arrays.asList(c1, c2));
 	}

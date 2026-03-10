@@ -52,6 +52,12 @@ public class RpgCharacter implements Serializable{
 		bonusClass();
 	}
 	
+	/**
+	 * Initializes the default base attributes for a newly created character.
+	 * 
+	 * This method sets the starting values for HP, strength, dexterity,
+	 * intelligence, resistance, and mana before any class bonuses are applied.
+	 */
 	private void initialAttributes() {
 		baseAttributes.setHp(10);
 		baseAttributes.setStrength(5);
@@ -61,6 +67,12 @@ public class RpgCharacter implements Serializable{
 		baseAttributes.setMana(5);
 	}
 	
+	/**
+	 * Applies the attribute bonuses from the character's class.
+	 * 
+	 * The attributes defined in the CharacterClass are added to the
+	 * character's base attributes.
+	 */
 	public void bonusClass() {
 		baseAttributes.addAttributes(characterClass.getAttributes());
 	}
