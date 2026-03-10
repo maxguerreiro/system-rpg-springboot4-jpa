@@ -1,6 +1,7 @@
 package com.systemrpg.rpg.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Embedded;
@@ -8,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 /**
@@ -25,6 +27,9 @@ public class CharacterClass implements Serializable {
 	
 	@Embedded
 	private Attributes attributes;
+	
+	@OneToMany(mappedBy = "characterClass")
+	private List<RpgCharacter> character;
 	
 	public CharacterClass() {
 	}

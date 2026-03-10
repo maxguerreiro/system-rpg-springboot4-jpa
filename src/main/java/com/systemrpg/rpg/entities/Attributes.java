@@ -12,14 +12,15 @@ import jakarta.persistence.Embeddable;
 public class Attributes implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private Integer hp;
-	private Integer strength;
-	private Integer dexterity;
-	private Integer intelligence;
-	private Integer resistance;
-	private Integer mana;
+	private Integer hp = 0; 
+	private Integer strength = 0;
+	private Integer dexterity = 0;
+	private Integer intelligence = 0;
+	private Integer resistance = 0;
+	private Integer mana = 0;
 	
 	public Attributes() {
+		super();
 	}
 
 	public Attributes(Integer hp, Integer strength, Integer dexterity, Integer intelligence, Integer resistance,
@@ -36,13 +37,13 @@ public class Attributes implements Serializable{
 	/*
 	 * Adds the values of the provided attributes to the current one 
 	 */
-	public void addAttributes(Attributes a) {
-		this.hp += a.getHp();
-		this.strength += a.getStrength();
-		this.dexterity += a.getDexterity();
-		this.intelligence += a.getIntelligence();
-		this.resistance += a.getResistance();
-		this.mana += a.getMana();
+	public void addAttributes(Attributes bonus) {
+		this.hp += bonus.hp;
+		this.strength += bonus.strength;
+		this.dexterity += bonus.dexterity;
+		this.intelligence += bonus.intelligence;
+		this.resistance += bonus.resistance;
+		this.mana += bonus.mana;
 	}
 
 	public Integer getHp() {

@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.systemrpg.rpg.entities.CharacterClass;
-import com.systemrpg.rpg.services.CharacterClassService;
+import com.systemrpg.rpg.entities.RpgCharacter;
+import com.systemrpg.rpg.services.RpgCharacterService;
 
 /**
  * REST API controller that handles HTTP requests related to character classes. 
  */
 @RestController
-@RequestMapping("/characterclasses")
-public class CharacterClassResource {
+@RequestMapping("/characters")
+public class RpgCharacterResource {
 	
 	@Autowired
-	private CharacterClassService classService;
+	private RpgCharacterService characterService;
 	
 	/** 
-	 * Fetches all character classes.
-	 * @return A list of all classes with an HTTP status (200)
+	 * Fetches all character.
+	 * @return A list of all character with an HTTP status (200)
 	 */
 	@GetMapping
-	public ResponseEntity<List<CharacterClass>> findAll() {
-		List<CharacterClass> list = classService.findAll();
+	public ResponseEntity<List<RpgCharacter>> findAll() {
+		List<RpgCharacter> list = characterService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -38,8 +38,8 @@ public class CharacterClassResource {
 	 * @return A ResponseEntity containing the CharacterClass object.
 	 */
 	@GetMapping(value = ("/{id}"))
-	public ResponseEntity<CharacterClass> findById(@PathVariable Long id) {
-		CharacterClass obj = classService.findById(id);
+	public ResponseEntity<RpgCharacter> findById(@PathVariable Long id) {
+		RpgCharacter obj = characterService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
