@@ -1,11 +1,11 @@
 package com.systemrpg.rpg.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.systemrpg.rpg.dtos.CharacterClassDTO;
 import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
 
@@ -19,20 +19,36 @@ public class CharacterClassService {
 	private CharacterClassRepository classRepo;
 	
 	/**
-	 * Returns a list of all character classes persisted in the database.
-	 * @return List of CharacterClass entities.
+	 * Retrieves all characters classes from the database and converts them into DTO objects.
+	 *
+	 * This method fetches all persisted CharacterClass entities and maps them to
+	 * CharacterClassDTO instances before returning the result. The DTO layer is used
+	 * to expose only the necessary data to the API consumers while hiding the
+	 * internal entity structure.
+	 *
+	 * @return a list of CharacterClassDTO objects representing all characters
 	 */
-	public List<CharacterClass> findAll() {
-		return classRepo.findAll(); 
+	public List<CharacterClassDTO> findAll() {
+		List<CharacterClass> list = classRepo.findAll();
+		return list.stream()
+				.map(CharacterClassDTO::new)
+				.toList();
 	}
 	
 	/**
-	 * Returns a character classes persisted in the database, searching by id.
-	 * @return List a CharacterClass entity.
+	 * Retrieves a single character class by its identifier.
+	 *
+	 * This method searches the database for a character class with the given ID.
+	 * If found, the entity is converted into a CharacterClassDTO before being returned.
+	 *
+	 * @param id the unique identifier of the character
+	 * @return a RpgCharacterDTO representing the found character
+	 * @throws RuntimeException if the character does not exist
 	 */
-	public CharacterClass findById(Long id) {
-		Optional<CharacterClass> obj = classRepo.findById(id);
-		return obj.get();
+	public CharacterClassDTO findById(Long id) {
+		CharacterClass obj = classRepo.findById(id) 
+				.orElseThrow(() -> new RuntimeException("Character class not found!"));
+		return new CharacterClassDTO(obj);
 	}
 
 }

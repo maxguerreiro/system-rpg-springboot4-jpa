@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.systemrpg.rpg.entities.CharacterClass;
+import com.systemrpg.rpg.dtos.CharacterClassDTO;
 import com.systemrpg.rpg.services.CharacterClassService;
 
 /**
@@ -27,8 +27,8 @@ public class CharacterClassResource {
 	 * @return A list of all classes with an HTTP status (200)
 	 */
 	@GetMapping
-	public ResponseEntity<List<CharacterClass>> findAll() {
-		List<CharacterClass> list = classService.findAll();
+	public ResponseEntity<List<CharacterClassDTO>> findAll() {
+		List<CharacterClassDTO> list = classService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -38,8 +38,8 @@ public class CharacterClassResource {
 	 * @return A ResponseEntity containing the CharacterClass object.
 	 */
 	@GetMapping(value = ("/{id}"))
-	public ResponseEntity<CharacterClass> findById(@PathVariable Long id) {
-		CharacterClass obj = classService.findById(id);
+	public ResponseEntity<CharacterClassDTO> findById(@PathVariable Long id) {
+		CharacterClassDTO obj = classService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
