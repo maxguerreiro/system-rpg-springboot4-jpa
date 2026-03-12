@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.systemrpg.rpg.entities.RpgCharacter;
+import com.systemrpg.rpg.dtos.RpgCharacterDTO;
 import com.systemrpg.rpg.services.RpgCharacterService;
 
 /**
@@ -27,19 +27,23 @@ public class RpgCharacterResource {
 	 * @return A list of all character with an HTTP status (200)
 	 */
 	@GetMapping
-	public ResponseEntity<List<RpgCharacter>> findAll() {
-		List<RpgCharacter> list = characterService.findAll();
+	public ResponseEntity<List<RpgCharacterDTO>> findAll() {
+		List<RpgCharacterDTO> list = characterService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	/**
-	 * Fetches a character class by its unique identifier.
-	 * @param id The ID of the class to be retrieved.
-	 * @return A ResponseEntity containing the CharacterClass object.
+	 * Retrieves a specific RPG character by its unique identifier.
+	 *
+	 * This endpoint returns the character data as a DTO representation,
+	 * ensuring that only the necessary information is exposed to the client.
+	 *
+	 * @param id the unique identifier of the character
+	 * @return a ResponseEntity containing the RpgCharacterDTO and HTTP status 200 (OK)
 	 */
 	@GetMapping(value = ("/{id}"))
-	public ResponseEntity<RpgCharacter> findById(@PathVariable Long id) {
-		RpgCharacter obj = characterService.findById(id);
+	public ResponseEntity<RpgCharacterDTO> findById(@PathVariable Long id) {
+		RpgCharacterDTO obj = characterService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }

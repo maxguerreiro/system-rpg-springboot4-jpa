@@ -3,6 +3,8 @@ package com.systemrpg.rpg.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,7 @@ public class RpgCharacter implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "class_id")
+	@JsonIgnore
 	private CharacterClass characterClass;
 
 	public RpgCharacter() {

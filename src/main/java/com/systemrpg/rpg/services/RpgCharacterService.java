@@ -1,11 +1,11 @@
 package com.systemrpg.rpg.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.systemrpg.rpg.dtos.RpgCharacterDTO;
 import com.systemrpg.rpg.entities.RpgCharacter;
 import com.systemrpg.rpg.repositories.RpgCharacterRepository;
 
@@ -19,20 +19,39 @@ public class RpgCharacterService {
 	private RpgCharacterRepository characterRepo;
 	
 	/**
-	 * Returns a list of all character persisted in the database.
-	 * @return List of Character entities.
+	 * Retrieves all RPG characters from the database and converts them into DTO objects.
+	 *
+	 * This method fetches all persisted RpgCharacter entities and maps them to
+	 * RpgCharacterDTO instances before returning the result. The DTO layer is used
+	 * to expose only the necessary data to the API consumers while hiding the
+	 * internal entity structure.
+	 *
+	 * @return a list of RpgCharacterDTO objects representing all characters
 	 */
-	public List<RpgCharacter> findAll() {
-		return characterRepo.findAll(); 
+	public List<RpgCharacterDTO> findAll() {
+		List<RpgCharacter> list = characterRepo.findAll();
+		
+		return list.stream()
+				.map(RpgCharacterDTO::new)
+				.toList();
 	}
 	
 	/**
-	 * Returns a character persisted in the database, searching by id.
-	 * @return List a Character entity.
+	 * Retrieves a single RPG character by its identifier.
+	 *
+	 * This method searches the database for a character with the given ID.
+	 * If found, the entity is converted into a RpgCharacterDTO before being returned.
+	 *
+	 * @param id the unique identifier of the character
+	 * @return a RpgCharacterDTO representing the found character
+	 * @throws RuntimeException if the character does not exist
 	 */
-	public RpgCharacter findById(Long id) {
-		Optional<RpgCharacter> obj = characterRepo.findById(id);
-		return obj.get();
+	public RpgCharacterDTO findById(Long id) {
+
+	    RpgCharacter obj = characterRepo.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Character not found"));
+
+	    return new RpgCharacterDTO(obj);
 	}
 
 }
