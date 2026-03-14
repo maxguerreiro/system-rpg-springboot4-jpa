@@ -35,7 +35,7 @@ public class CharacterClassResource {
 	/**
 	 * Fetches a character class by its unique identifier.
 	 * @param id The ID of the class to be retrieved.
-	 * @return A ResponseEntity containing the CharacterClass object.
+	 * @return A ResponseEntity containing the CharacterClassDTO object.
 	 */
 	@GetMapping(value = ("/{id}"))
 	public ResponseEntity<CharacterClassDTO> findById(@PathVariable Long id) {
