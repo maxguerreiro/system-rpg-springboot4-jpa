@@ -9,6 +9,7 @@ import com.systemrpg.rpg.entities.RpgCharacter;
 public class RpgCharacterDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private String name;
 	private Integer age;
 	private Attributes attributes;
@@ -17,8 +18,9 @@ public class RpgCharacterDTO implements Serializable{
 	public RpgCharacterDTO() {
 	}
 
-	public RpgCharacterDTO(String name, Integer age, Attributes attributes, CharacterClass characterClass) {
+	public RpgCharacterDTO(Long id, String name, Integer age, Attributes attributes, CharacterClass characterClass) {
 		super();
+		this.setId(id);
 		this.name = name;
 		this.age = age;
 		this.attributes = attributes;
@@ -26,6 +28,7 @@ public class RpgCharacterDTO implements Serializable{
 	}
 	
 	public RpgCharacterDTO(RpgCharacter character) {
+		this.setId(character.getId());
 		this.name = character.getName();
 		this.age = character.getAge();
 		this.attributes = character.getBaseAttributes();
@@ -62,5 +65,13 @@ public class RpgCharacterDTO implements Serializable{
 
 	public void setCharacterClass(String characterClass) {
 		this.characterClass = characterClass;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
