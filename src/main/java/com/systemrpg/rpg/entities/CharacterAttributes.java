@@ -2,6 +2,8 @@ package com.systemrpg.rpg.entities;
 
 import java.io.Serializable;
 
+import com.systemrpg.rpg.dtos.CharacterAttributesUpdateDTO;
+
 import jakarta.persistence.Embeddable;
 
 /*
@@ -9,7 +11,7 @@ import jakarta.persistence.Embeddable;
  * Implements Serializable for data persistence or network transmission.
  */
 @Embeddable
-public class Attributes implements Serializable{
+public class CharacterAttributes implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer hp = 0; 
@@ -19,11 +21,11 @@ public class Attributes implements Serializable{
 	private Integer resistance = 0;
 	private Integer mana = 0;
 	
-	public Attributes() {
+	public CharacterAttributes() {
 		super();
 	}
 
-	public Attributes(Integer hp, Integer strength, Integer dexterity, Integer intelligence, Integer resistance,
+	public CharacterAttributes(Integer hp, Integer strength, Integer dexterity, Integer intelligence, Integer resistance,
 			Integer mana) {
 		super();
 		this.hp = hp;
@@ -37,13 +39,22 @@ public class Attributes implements Serializable{
 	/*
 	 * Adds the values of the provided attributes to the current one 
 	 */
-	public void addAttributes(Attributes bonus) {
-		this.hp += bonus.hp;
-		this.strength += bonus.strength;
-		this.dexterity += bonus.dexterity;
-		this.intelligence += bonus.intelligence;
-		this.resistance += bonus.resistance;
-		this.mana += bonus.mana;
+	public void addAttributes(CharacterAttributesUpdateDTO bonus) {
+		this.hp += bonus.getHp();
+		this.strength += bonus.getStrength();
+		this.dexterity += bonus.getDexterity();
+		this.intelligence += bonus.getIntelligence();
+		this.resistance += bonus.getResistance();
+		this.mana += bonus.getMana();
+	}
+	
+	public void addAttributes(CharacterAttributes bonus) {
+		this.hp += bonus.getHp();
+		this.strength += bonus.getStrength();
+		this.dexterity += bonus.getDexterity();
+		this.intelligence += bonus.getIntelligence();
+		this.resistance += bonus.getResistance();
+		this.mana += bonus.getMana();
 	}
 
 	public Integer getHp() {

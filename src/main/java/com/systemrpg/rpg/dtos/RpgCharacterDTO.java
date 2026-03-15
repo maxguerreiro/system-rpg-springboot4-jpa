@@ -2,7 +2,7 @@ package com.systemrpg.rpg.dtos;
 
 import java.io.Serializable;
 
-import com.systemrpg.rpg.entities.Attributes;
+import com.systemrpg.rpg.entities.CharacterAttributes;
 import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.entities.RpgCharacter;
 
@@ -12,13 +12,13 @@ public class RpgCharacterDTO implements Serializable{
 	private Long id;
 	private String name;
 	private Integer age;
-	private Attributes attributes;
+	private CharacterAttributes attributes;
 	private String characterClass;
 	
 	public RpgCharacterDTO() {
 	}
 
-	public RpgCharacterDTO(Long id, String name, Integer age, Attributes attributes, CharacterClass characterClass) {
+	public RpgCharacterDTO(Long id, String name, Integer age, CharacterAttributes attributes, CharacterClass characterClass) {
 		super();
 		this.setId(id);
 		this.name = name;
@@ -51,11 +51,11 @@ public class RpgCharacterDTO implements Serializable{
 		this.age = idade;
 	}
 
-	public Attributes getAttributes() {
+	public CharacterAttributes getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Attributes attributes) {
+	public void setAttributes(CharacterAttributes attributes) {
 		this.attributes = attributes;
 	}
 

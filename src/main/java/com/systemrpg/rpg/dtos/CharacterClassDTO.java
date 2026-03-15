@@ -2,19 +2,19 @@ package com.systemrpg.rpg.dtos;
 
 import java.io.Serializable;
 
-import com.systemrpg.rpg.entities.Attributes;
+import com.systemrpg.rpg.entities.CharacterAttributes;
 import com.systemrpg.rpg.entities.CharacterClass;
 
 public class CharacterClassDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String name;
-	private Attributes attributes;
+	private CharacterAttributes attributes;
 	
 	public CharacterClassDTO() {
 	}
 
-	public CharacterClassDTO(String name, Attributes attributes) {
+	public CharacterClassDTO(String name, CharacterAttributes attributes) {
 		super();
 		this.name = name;
 		this.attributes = attributes;
@@ -33,11 +33,11 @@ public class CharacterClassDTO implements Serializable {
 		this.name = name;
 	}
 
-	public Attributes getAttributes() {
+	public CharacterAttributes getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Attributes attributes) {
+	public void setAttributes(CharacterAttributes attributes) {
 		this.attributes = attributes;
 	}
 }

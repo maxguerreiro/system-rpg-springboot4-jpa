@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.systemrpg.rpg.entities.Attributes;
+import com.systemrpg.rpg.entities.CharacterAttributes;
 import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
 import com.systemrpg.rpg.repositories.RpgCharacterRepository;
@@ -34,7 +34,7 @@ public class TestConfiguration implements CommandLineRunner{
 		CharacterClass warrior = new CharacterClass();
 		warrior.setName(ClassType.WARRIOR);
 
-		Attributes warriorAttr = new Attributes();
+		CharacterAttributes warriorAttr = new CharacterAttributes();
 		warriorAttr.setHp(5);
 		warriorAttr.setStrength(8);
 		warriorAttr.setDexterity(2);
@@ -47,7 +47,7 @@ public class TestConfiguration implements CommandLineRunner{
 		CharacterClass mage = new CharacterClass();
 		mage.setName(ClassType.MAGE);
 
-		Attributes mageAttr = new Attributes();
+		CharacterAttributes mageAttr = new CharacterAttributes();
 		mageAttr.setHp(2);
 		mageAttr.setStrength(1);
 		mageAttr.setDexterity(3);

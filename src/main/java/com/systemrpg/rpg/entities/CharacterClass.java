@@ -32,7 +32,7 @@ public class CharacterClass implements Serializable {
     private ClassType name;
 
     @Embedded
-    private Attributes attributes;
+    private CharacterAttributes attributes;
 
     @OneToMany(mappedBy = "characterClass")
     private List<RpgCharacter> characters;
@@ -40,7 +40,7 @@ public class CharacterClass implements Serializable {
 	public CharacterClass() {
 	}
 
-	public CharacterClass(Long id, ClassType name, Attributes bonusAttributes) {
+	public CharacterClass(Long id, ClassType name, CharacterAttributes bonusAttributes) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -62,11 +62,11 @@ public class CharacterClass implements Serializable {
 		this.name = type;
 	}
 
-	public Attributes getAttributes() {
+	public CharacterAttributes getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Attributes attributes) {
+	public void setAttributes(CharacterAttributes attributes) {
 		this.attributes = attributes;
 	}
 

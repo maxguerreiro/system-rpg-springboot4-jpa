@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.systemrpg.rpg.dtos.CharacterAttributesUpdateDTO;
 import com.systemrpg.rpg.dtos.RpgCharacterDTO;
 import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.entities.RpgCharacter;
@@ -91,5 +92,23 @@ public class RpgCharacterService {
 	public void deleteById(Long id) {
 		characterRepo.deleteById(id);
 	}
-
+	
+	/**
+	 * Updates the attributes of a character.
+	 *
+	 * This method retrieves the character by its ID, updates only the attributes
+	 * provided in the DTO, and persists the changes in the database.
+	 *
+	 * @param id the ID of the character to update
+	 * @param dto the DTO containing the new attribute values
+	 * @return a DTO representing the updated character
+	 * @throws ResourceNotFoundException if the character does not exist
+	 */
+	public RpgCharacterDTO updateAttributes(Long id, CharacterAttributesUpdateDTO attributes) {
+		RpgCharacter obj = characterRepo.getReferenceById(id);
+		obj.getBaseAttributes().addAttributes(attributes);
+		RpgCharacterDTO dto = new RpgCharacterDTO(obj);
+		characterRepo.save(obj);
+		return dto;
+	}
 }

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.systemrpg.rpg.dtos.CharacterAttributesUpdateDTO;
 import com.systemrpg.rpg.dtos.RpgCharacterDTO;
 import com.systemrpg.rpg.services.RpgCharacterService;
 
@@ -77,5 +79,26 @@ public class RpgCharacterResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		characterService.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Updates the attributes of an existing RPG character.
+	 *
+	 * This endpoint receives a partial set of character attributes in the request body
+	 * and updates the corresponding attributes of the character identified by the
+	 * provided ID. Only the attributes present in the request will be updated.
+	 *
+	 * @param id the ID of the character whose attributes will be updated
+	 * @param attributesDTO the DTO containing the attributes to update
+	 * @return a ResponseEntity containing the updated RpgCharacterDTO
+	 *         with HTTP status 200 (OK)
+	 */
+	@PutMapping("/{id}")
+	public ResponseEntity<RpgCharacterDTO> updateAttributes(
+	        @PathVariable Long id,
+	        @RequestBody CharacterAttributesUpdateDTO attributesDTO) {
+
+	    RpgCharacterDTO dto = characterService.updateAttributes(id, attributesDTO);
+	    return ResponseEntity.ok().body(dto);
 	}
 }

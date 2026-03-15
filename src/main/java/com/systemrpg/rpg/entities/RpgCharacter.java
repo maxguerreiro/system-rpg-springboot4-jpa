@@ -34,7 +34,7 @@ public class RpgCharacter implements Serializable{
 	private Integer age;
 	
 	@Embedded
-	private Attributes baseAttributes;
+	private CharacterAttributes baseAttributes;
 	
 	@ManyToOne
 	@JoinColumn(name = "class_id")
@@ -49,7 +49,7 @@ public class RpgCharacter implements Serializable{
 		this.id = id;
 		this.name = name;
 		this.age = age;
-		this.baseAttributes = new Attributes();
+		this.baseAttributes = new CharacterAttributes();
 		initialAttributes();
 		this.characterClass = characterClass;
 		bonusClass();
@@ -104,11 +104,11 @@ public class RpgCharacter implements Serializable{
 		this.age = age;
 	}
 
-	public Attributes getBaseAttributes() {
+	public CharacterAttributes getBaseAttributes() {
 		return baseAttributes;
 	}
 
-	public void setBaseAttributes(Attributes baseAttributes) {
+	public void setBaseAttributes(CharacterAttributes baseAttributes) {
 		this.baseAttributes = baseAttributes;
 	}
 
