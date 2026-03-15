@@ -5,8 +5,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,18 +56,26 @@ public class RpgCharacterResource {
 	/**
 	 * Creates a new RPG character.
 	 *
-	 * This endpoint receives character data in the request body,
-	 * delegates the creation process to the service layer,
-	 * and returns the created character as a DTO.
+	 * This endpoint receives character data in the request body and delegates
+	 * the creation process to the service layer. After the character is created,
+	 * it builds the URI for the newly created resource and returns it in the
+	 * Location header following REST best practices.
 	 *
 	 * @param dto the DTO containing the character creation data
 	 * @return a ResponseEntity containing the created RpgCharacterDTO
-	 *         with HTTP status 201 (Created)
+	 *         with HTTP status 201 (Created) and the URI of the new resource
+	 *         in the Location header
 	 */
 	@PostMapping
 	public ResponseEntity<RpgCharacterDTO> newCharacter(@RequestBody RpgCharacterDTO dto) {
 		RpgCharacterDTO newCharacter = characterService.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCharacter.getId()).toUri();
 		return ResponseEntity.created(uri).body(newCharacter);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		characterService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 }

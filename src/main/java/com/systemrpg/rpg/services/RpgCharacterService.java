@@ -87,5 +87,9 @@ public class RpgCharacterService {
 		
 		return new RpgCharacterDTO(obj);
 	}
+	
+	public void deleteById(Long id) {
+		characterRepo.deleteById(id);
+	}
 
 }
