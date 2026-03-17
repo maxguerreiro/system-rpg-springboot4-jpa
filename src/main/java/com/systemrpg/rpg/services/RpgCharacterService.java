@@ -12,6 +12,7 @@ import com.systemrpg.rpg.entities.RpgCharacter;
 import com.systemrpg.rpg.enums.ClassType;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
 import com.systemrpg.rpg.repositories.RpgCharacterRepository;
+import com.systemrpg.rpg.services.exceptions.ResourceNotFoundException;
 
 /**
  * Service class for managing character class operations.
@@ -43,19 +44,19 @@ public class RpgCharacterService {
 	}
 	
 	/**
-	 * Retrieves a single RPG character by its identifier.
+	 * Retrieves a character by its identifier.
 	 *
-	 * This method searches the database for a character with the given ID.
-	 * If found, the entity is converted into a RpgCharacterDTO before being returned.
+	 * If no character is found with the given ID, a ResourceNotFoundException is thrown.
 	 *
-	 * @param id the unique identifier of the character
-	 * @return a RpgCharacterDTO representing the found character
-	 * @throws RuntimeException if the character does not exist
+	 *
+	 * @param id Identifier of the character
+	 * @return RpgCharacterDTO containing the character data
+	 * @throws ResourceNotFoundException if the character does not exist
 	 */
 	public RpgCharacterDTO findById(Long id) {
 
 	    RpgCharacter obj = characterRepo.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Character not found"));
+	    		.orElseThrow(() -> new ResourceNotFoundException(id));
 
 	    return new RpgCharacterDTO(obj);
 	}
