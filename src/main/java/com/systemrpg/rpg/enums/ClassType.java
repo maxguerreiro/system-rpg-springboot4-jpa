@@ -13,7 +13,8 @@ public enum ClassType {
     MAGE("Mage"),
     ROGUE("Rogue"),
     CLERIC("Cleric"),
-    PALADIN("Paladin");
+    PALADIN("Paladin"), 
+    ARCHER("Archer");
 
     private String value;
 

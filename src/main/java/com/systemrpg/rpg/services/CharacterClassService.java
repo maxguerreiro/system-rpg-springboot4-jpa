@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.systemrpg.rpg.dtos.CharacterClassDTO;
 import com.systemrpg.rpg.entities.CharacterClass;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
+import com.systemrpg.rpg.services.exceptions.ResourceNotFoundException;
 
 /**
  * Service class for managing character class operations.
@@ -47,7 +48,7 @@ public class CharacterClassService {
 	 */
 	public CharacterClassDTO findById(Long id) {
 		CharacterClass obj = classRepo.findById(id) 
-				.orElseThrow(() -> new RuntimeException("Character class not found!"));
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 		return new CharacterClassDTO(obj);
 	}
 

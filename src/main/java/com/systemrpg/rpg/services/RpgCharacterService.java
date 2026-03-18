@@ -12,6 +12,7 @@ import com.systemrpg.rpg.entities.RpgCharacter;
 import com.systemrpg.rpg.enums.ClassType;
 import com.systemrpg.rpg.repositories.CharacterClassRepository;
 import com.systemrpg.rpg.repositories.RpgCharacterRepository;
+import com.systemrpg.rpg.services.exceptions.InvalidClassCharacterException;
 import com.systemrpg.rpg.services.exceptions.ResourceNotFoundException;
 
 /**
@@ -24,7 +25,8 @@ public class RpgCharacterService {
 	private RpgCharacterRepository characterRepo;
 	
 	@Autowired
-	private CharacterClassRepository classRepo;	
+	private CharacterClassRepository classRepo;
+
 	/**
 	 * Retrieves all RPG characters from the database and converts them into DTO objects.
 	 *
@@ -64,24 +66,30 @@ public class RpgCharacterService {
 	/**
 	 * Creates and persists a new RPG character based on the provided DTO.
 	 *
-	 * This method receives character data from the API layer, converts the
-	 * provided class name into a ClassType enum, and retrieves the corresponding
-	 * CharacterClass entity from the database.
+	 * This method validates the provided character class, converting it into a
+	 * ClassType enum and retrieving the corresponding CharacterClass entity.
+	 * If the class is invalid or not found, an exception is thrown.
 	 *
-	 * A new RpgCharacter entity is then created and saved in the database.
-	 * After persistence, the entity is converted back into a DTO to be returned
-	 * to the API client.
+	 * After validation, a new RpgCharacter entity is created, saved in the database,
+	 * and returned as a DTO.
 	 *
-	 * @param dto the data transfer object containing the character creation data
+	 * @param dto the data transfer object containing character creation data
 	 * @return a RpgCharacterDTO representing the newly created character
-	 * @throws RuntimeException if the provided class does not exist
+	 * @throws InvalidClassCharacterException if the provided class is invalid or does not exist
 	 */
 	public RpgCharacterDTO insert(RpgCharacterDTO dto) {
 		
-		ClassType type = ClassType.fromString(dto.getCharacterClass());
+		ClassType type;
+		
+		try {
+			type = ClassType.fromString(dto.getCharacterClass());
+		} catch (IllegalArgumentException e) {
+			throw new InvalidClassCharacterException(dto.getCharacterClass());
+		}
+		
 		
 		CharacterClass characterClass = classRepo.findByName(type)
-				.orElseThrow(() -> new RuntimeException("Class not found"));
+				.orElseThrow(() -> new InvalidClassCharacterException(dto.getCharacterClass()));
 		
 		RpgCharacter obj = new RpgCharacter(null, dto.getName(), dto.getAge(), characterClass);
 		
@@ -90,8 +98,20 @@ public class RpgCharacterService {
 		return new RpgCharacterDTO(obj);
 	}
 	
+	/**
+	 * Deletes a character by its identifier.
+	 *
+	 * This method first checks whether the character exists in the database.
+	 * If no entity is found, a ResourceNotFoundException is thrown.
+	 *
+	 * @param id identifier of the character to be deleted
+	 * @throws ResourceNotFoundException if the character does not exist
+	 */
 	public void deleteById(Long id) {
-		characterRepo.deleteById(id);
+		if (!characterRepo.existsById(id)) {
+			throw new ResourceNotFoundException(id);
+		}
+			characterRepo.deleteById(id);
 	}
 	
 	/**
