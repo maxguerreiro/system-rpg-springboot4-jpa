@@ -15,6 +15,12 @@ public class RpgCharacterDTO implements Serializable{
 	private CharacterAttributes attributes;
 	private String characterClass;
 	
+	//---------
+	
+	private Integer xp;
+	private Integer pts;
+	private Integer level;
+	
 	public RpgCharacterDTO() {
 	}
 
@@ -33,6 +39,25 @@ public class RpgCharacterDTO implements Serializable{
 		this.age = character.getAge();
 		this.attributes = character.getBaseAttributes();
 		this.characterClass = character.getCharacterClass().getName().toString();
+		this.setXp(character.getXp());
+		this.pts = character.getPts();
+		this.level = character.getLevel();
+	}
+
+	public Integer getPts() {
+		return pts;
+	}
+
+	public void setPts(Integer pts) {
+		this.pts = pts;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	public String getName() {
@@ -73,5 +98,13 @@ public class RpgCharacterDTO implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getXp() {
+		return xp;
+	}
+
+	public void setXp(Integer xp) {
+		this.xp = xp;
 	}
 }

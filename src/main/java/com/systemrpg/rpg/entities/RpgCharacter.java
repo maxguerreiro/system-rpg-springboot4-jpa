@@ -33,6 +33,12 @@ public class RpgCharacter implements Serializable{
 	private String name;
 	private Integer age;
 	
+	//-------------
+	
+	private Integer xp;
+	private Integer level;
+	private Integer pts;
+	
 	@Embedded
 	private CharacterAttributes baseAttributes;
 	
@@ -53,6 +59,9 @@ public class RpgCharacter implements Serializable{
 		initialAttributes();
 		this.characterClass = characterClass;
 		bonusClass();
+		this.xp = 0;
+		this.level = 1;
+		this.pts = 0;
 	}
 	
 	/**
@@ -78,6 +87,34 @@ public class RpgCharacter implements Serializable{
 	 */
 	public void bonusClass() {
 		baseAttributes.addAttributes(characterClass.getAttributes());
+	}
+	
+	public int xpToNextLevel() {
+		return 100 + (level - 1) * 50;
+	}
+	
+	public void gainXp(Integer amount) {
+		this.xp += amount;
+		
+		while (this.xp >= xpToNextLevel()) {
+			this.xp -= xpToNextLevel();
+			levelUp();
+		}
+	}
+	
+	//--------
+	
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public void setPts(Integer pts) {
+		this.pts = pts;
+	}
+
+	public void levelUp() {
+		this.pts ++;
+		this.level ++;
 	}
 
 	public Long getId() {
@@ -119,6 +156,22 @@ public class RpgCharacter implements Serializable{
 	public void setCharacterClass(CharacterClass characterClass) {
 		this.characterClass = characterClass;
 	}
+	
+	public Integer getLevel() {
+		return level;
+	}
+
+	public Integer getPts() {
+		return pts;
+	}
+	
+	public Integer getXp() {
+		return xp;
+	}
+
+	public void setXp(Integer xp) {
+		this.xp = xp;
+	}
 
 	@Override
 	public int hashCode() {
@@ -136,4 +189,5 @@ public class RpgCharacter implements Serializable{
 		RpgCharacter other = (RpgCharacter) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

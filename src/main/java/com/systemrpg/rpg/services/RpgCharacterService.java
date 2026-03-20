@@ -132,4 +132,52 @@ public class RpgCharacterService {
 		characterRepo.save(obj);
 		return dto;
 	}
+	
+	/**
+	 * Adds experience points to a character and handles automatic level progression.
+	 *
+	 * This method retrieves the character by its ID, increases its XP based on the
+	 * provided amount, and checks if the character qualifies for one or more level-ups.
+	 * When leveling up, the character gains attribute points accordingly.
+	 *
+	 * @param id the ID of the character
+	 * @param amount the amount of XP to add
+	 * @return a DTO representing the updated character
+	 * @throws ResourceNotFoundException if the character does not exist
+	 */
+	public RpgCharacterDTO gainXp(Long id, Integer amount) {
+		
+		RpgCharacter obj = characterRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
+		
+		obj.gainXp(amount);
+		
+		characterRepo.save(obj);
+		
+		return new RpgCharacterDTO(obj);
+	}
+	
+	/**
+	 * Adds attribute points directly to a character.
+	 *
+	 * This method is used to grant points independently of the leveling system,
+	 * typically as a reward mechanism. The points are added to the character's
+	 * available pool for attribute distribution.
+	 *
+	 * @param id the ID of the character
+	 * @param points the number of points to add
+	 * @return a DTO representing the updated character
+	 * @throws ResourceNotFoundException if the character does not exist
+	 */
+	public RpgCharacterDTO gainPoints(Long id, Integer amount) {
+		
+		RpgCharacter obj = characterRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
+		
+		obj.setPts(obj.getPts() + amount);
+		
+		characterRepo.save(obj);
+		
+		return new RpgCharacterDTO(obj);
+	}
 }
